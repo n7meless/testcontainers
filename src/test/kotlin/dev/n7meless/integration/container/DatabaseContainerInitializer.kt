@@ -6,12 +6,11 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.lifecycle.Startables
 
-
-class DatabaseContainerInitializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
+internal class DatabaseContainerInitializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
         TestPropertyValues.of(
-            "spring.datasource.url=jdbc:tc:postgresql://${POSTGRESQL_CONTAINER.databaseName}",
+            "spring.datasource.url=${POSTGRESQL_CONTAINER.jdbcUrl}",
             "spring.datasource.username=${POSTGRESQL_CONTAINER.username}",
             "spring.datasource.password=${POSTGRESQL_CONTAINER.password}"
         ).applyTo(applicationContext.environment)
